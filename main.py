@@ -15,10 +15,29 @@
 # limitations under the License.
 #
 import webapp2
+import random
+
+def rand_fortune():
+    fortunes = ["To avoid criticism, do nothing, say nothing, be nothing", "Error 404: Fortune not found", "Optimist believe we live in the best of worlds and pessimists fear this is true.", "Of all our human resources, the most precious is the desire to improve"]
+    index = random.randint(0,3)
+
+    return fortunes[index]
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        header = "<h1>Fortune Cookie</h1>"
+
+        fortune = rand_fortune()
+        final_fortune_sent = "<p>"'Your fortune is: ' + fortune + "</p>"
+
+        lucky_num = random.randint(1,100)
+        num_sent = 'Your lucky number: ' + str(lucky_num)
+        final_num_sent = "<p>" + num_sent + "</p>"
+
+        another_cookie = "<p><a href='.'><button>another cookie please</button></a></p>"
+
+        da_cookie = header + final_fortune_sent + final_num_sent + another_cookie
+        self.response.write(da_cookie)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
